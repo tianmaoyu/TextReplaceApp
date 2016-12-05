@@ -92,7 +92,16 @@ namespace TextReplaceApp
                 string message = "";
                 foreach (string fliePath in filePaths)//\n
                 {
-                    message += FindTextInContent(fileText, fliePath) + "\n";
+                    //HTML.XML
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".HTML")|| Path.GetExtension(fliePath).ToUpper().Equals(".XML"))
+                    {
+                        message += FindForHTMLOrXML(fileText, fliePath) + "\n";
+                    }
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".TXT"))
+                    {
+                        message += FindTextInContent(fileText, fliePath) + "\n";
+
+                    }
                 }
                 MessageBox.Show(message);
             }
@@ -124,7 +133,15 @@ namespace TextReplaceApp
                 string message = "";
                 foreach (string fliePath in filePaths)//\n
                 {
-                    message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
+                    //HTML.XML
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".HTML") || Path.GetExtension(fliePath).ToUpper().Equals(".XML"))
+                    {
+                        message += RelaceForHTMLOrXML(fileText, repalceText, fliePath) + "\n";
+                    }
+                    if(Path.GetExtension(fliePath).ToUpper().Equals(".TXT"))
+                    {
+                        message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
+                    }
                 }
                 MessageBox.Show(message);
             }
@@ -142,7 +159,7 @@ namespace TextReplaceApp
                 return "没找到" + filePath;
             }
 
-            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
+            StreamReader sr = new StreamReader(filePath, Encoding.Default);
             string line;
             int i = 0;
             while ((line = sr.ReadLine()) != null)
@@ -155,7 +172,7 @@ namespace TextReplaceApp
             }
             string fileName = Path.GetFileName(filePath);
             sr.Close();
-            string reslut = string.Format("内容中:{0} 找到 {1} 个:\"{2}\"", fileName, i, text);
+            string reslut = string.Format("在文件:{0} -----找到 {1} 个:\"{2}\"", fileName, i, text);
             return reslut;
         }
 
@@ -171,7 +188,7 @@ namespace TextReplaceApp
             {
                 return "没找到" + filePath;
             }
-            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
+            StreamReader sr = new StreamReader(filePath, Encoding.Default);
             string line;
             int i = 0;
             while ((line = sr.ReadLine()) != null)
@@ -201,11 +218,11 @@ namespace TextReplaceApp
 
 
             string con = "";
-            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
+            StreamReader sr = new StreamReader(filePath, Encoding.Default);
             con = sr.ReadToEnd();
             con = con.Replace(text, newText);
             sr.Close();
-            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
+            StreamWriter sw = new StreamWriter(filePath, false, Encoding.Default);
             sw.WriteLine(con);
             sw.Close();
 
@@ -213,23 +230,45 @@ namespace TextReplaceApp
             Int32.TryParse(countStr, out newCount);
 
             string fileName = Path.GetFileName(filePath);
-            string reslut = string.Format("在文件{0}中一共替换了{1}个{2}", fileName, newCount - oldCount, text);
+            string reslut = string.Format("在文件{0}-----替换了{1}个{2}", fileName, newCount - oldCount, text);
             return reslut;
         }
 
+        public String FindForHTMLOrXML(string text, string filePath)
+        {
+            int replaceCount = 0;
+            string content = "";
+            StreamReader sr = new StreamReader(filePath, Encoding.Default);
+            content = sr.ReadToEnd();
+            Regex regex = new Regex(@"(?<=>).*?(?=<)");
+            var matches = regex.Matches(content);
+            foreach (Match match in matches)
+            {
 
+                if (match.Value.Contains(text))
+                {
+                    replaceCount++;
+                }
+            }
+            sr.Close();
+            string fileName = Path.GetFileName(filePath);
+            String result = string.Format("在文件：{0}中-----找到{1}个\"{2}\"", fileName, replaceCount, text);
+            return result;
+        }
         /// <summary>
-        /// 得到html.xml 这种文件要替换的字符串，和新的字符串
+        /// 替换在html 中，xml 中的
         /// </summary>
-        /// <param name="oldStrings"></param>
-        /// <param name="newStrings"></param>
-        public String GRelaceForHTMLOrXML(string text, string newText, string filePath)
+        /// <param name="text"></param>
+        /// <param name="newText"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public String RelaceForHTMLOrXML(string text, string newText, string filePath)
         {
             List<string> oldStrings = new List<string>();
             List<string> newStrings = new List<string>();
             int replaceCount = 0;
             string content = "";
-            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
+            StreamReader sr = new StreamReader(filePath, Encoding.GetEncoding("gb2312"));
             content = sr.ReadToEnd();
             Regex regex = new Regex(@"(?<=>).*?(?=<)");
             var matches = regex.Matches(content);
@@ -245,15 +284,16 @@ namespace TextReplaceApp
             }
             sr.Close();
             //对html .xml 进行替换
-            for(int i=0;i< oldStrings.Count; i++)
+            for (int i=0;i< oldStrings.Count; i++)
             {
-                content.Replace(oldStrings[i], newStrings[i]);
+                content= content.Replace(oldStrings[i], newStrings[i]);
             }
-            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
+           
+            StreamWriter sw = new StreamWriter(filePath, false, Encoding.GetEncoding("gb2312"));
             sw.WriteLine(content);
             sw.Close();
             string fileName = Path.GetFileName(filePath);
-            String result = string.Format("标题中：{0}的题目中找到{1}个\"{2}\"", fileName, replaceCount, text);
+            String result = string.Format("在文件：{0}中-----替换了{1}个\"{2}\"", fileName, replaceCount, text);
             return result;
         }
         /// <summary>
@@ -266,7 +306,7 @@ namespace TextReplaceApp
             {
                 return null;
             }
-            String[] files = Directory.GetFiles(fileDirectory, "*.txt", SearchOption.TopDirectoryOnly);//SearchOption.AllDirectories
+            String[] files = Directory.GetFiles(fileDirectory, "*.*", SearchOption.TopDirectoryOnly);//SearchOption.AllDirectories
             return files;
         }
 
