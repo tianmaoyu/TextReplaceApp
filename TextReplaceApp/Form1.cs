@@ -86,25 +86,12 @@ namespace TextReplaceApp
             }
             string fileText = this.tb_findText.Text;
             FindEnum where = GetWhere();
-            if (where.Equals(FindEnum.All))
-            {
-                var filePaths = GetFlies(directoyPath);
-                string message = "";
-                foreach (string fliePath in filePaths)//\n
-                {
-
-                    message += FindTextInContent(fileText, fliePath) + "\n";
-                }
-                MessageBox.Show(message);
-            }
-          
             if (where.Equals(FindEnum.InContent))
             {
                 var filePaths = GetFlies(directoyPath);
                 string message = "";
                 foreach (string fliePath in filePaths)//\n
                 {
-
                     message += FindTextInContent(fileText, fliePath) + "\n";
                 }
                 MessageBox.Show(message);
@@ -131,18 +118,6 @@ namespace TextReplaceApp
             }
 
             FindEnum where = GetWhere();
-            if (where.Equals(FindEnum.All))
-            {
-                  string message = "";
-              
-                var filePaths2 = GetFlies(directoyPath);
-                foreach (string fliePath in filePaths2)//\n
-                {
-                    message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
-                }
-                MessageBox.Show(message);
-            }
-         
             if (where.Equals(FindEnum.InContent))
             {
                 var filePaths = GetFlies(directoyPath);
@@ -303,10 +278,6 @@ namespace TextReplaceApp
         /// <returns></returns>
         public FindEnum GetWhere()
         {
-            if (check_incontent.Checked && check_intitle.Checked)
-            {
-                return FindEnum.All;
-            }
             if (this.check_incontent.Checked)
             {
                 return FindEnum.InContent;
@@ -326,6 +297,5 @@ namespace TextReplaceApp
     {
         No = 0,
         InContent = 1,
-        All = 3
     };
 }
