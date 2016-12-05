@@ -28,26 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_close = new System.Windows.Forms.Button();
+            this.btn_replace = new System.Windows.Forms.Button();
+            this.btn_find = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.check_intitle = new System.Windows.Forms.CheckBox();
+            this.check_incontent = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tb_replaceText = new System.Windows.Forms.TextBox();
+            this.tb_findText = new System.Windows.Forms.TextBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btn_restore = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.cob_path = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -64,133 +68,170 @@
             this.tabControl1.Location = new System.Drawing.Point(141, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(320, 377);
+            this.tabControl1.Size = new System.Drawing.Size(407, 421);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button3);
-            this.tabPage2.Controls.Add(this.button2);
-            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.cob_path);
+            this.tabPage2.Controls.Add(this.btn_close);
+            this.tabPage2.Controls.Add(this.btn_restore);
+            this.tabPage2.Controls.Add(this.btn_replace);
+            this.tabPage2.Controls.Add(this.btn_find);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.textBox2);
-            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Controls.Add(this.tb_replaceText);
+            this.tabPage2.Controls.Add(this.tb_findText);
             this.tabPage2.Controls.Add(this.richTextBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(312, 351);
+            this.tabPage2.Size = new System.Drawing.Size(399, 395);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "查找/替换";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // btn_close
             // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(6, 17);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(300, 113);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "       1.输入。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。\n       2.。。。。。。。。。。。。。。。。。。。。。。。。。。\n";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.btn_close.Location = new System.Drawing.Point(315, 360);
+            this.btn_close.Name = "btn_close";
+            this.btn_close.Size = new System.Drawing.Size(75, 23);
+            this.btn_close.TabIndex = 5;
+            this.btn_close.Text = "关闭";
+            this.btn_close.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // btn_replace
             // 
-            this.textBox1.Location = new System.Drawing.Point(96, 136);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(175, 21);
-            this.textBox1.TabIndex = 2;
+            this.btn_replace.Location = new System.Drawing.Point(116, 360);
+            this.btn_replace.Name = "btn_replace";
+            this.btn_replace.Size = new System.Drawing.Size(75, 23);
+            this.btn_replace.TabIndex = 5;
+            this.btn_replace.Text = "替换";
+            this.btn_replace.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // btn_find
             // 
-            this.textBox2.Location = new System.Drawing.Point(96, 177);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(175, 21);
-            this.textBox2.TabIndex = 2;
+            this.btn_find.Location = new System.Drawing.Point(18, 360);
+            this.btn_find.Name = "btn_find";
+            this.btn_find.Size = new System.Drawing.Size(75, 23);
+            this.btn_find.TabIndex = 5;
+            this.btn_find.Text = "查找";
+            this.btn_find.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // groupBox1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 139);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "查找内容：";
+            this.groupBox1.Controls.Add(this.check_intitle);
+            this.groupBox1.Controls.Add(this.check_incontent);
+            this.groupBox1.Location = new System.Drawing.Point(16, 274);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(377, 80);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "范围";
+            // 
+            // check_intitle
+            // 
+            this.check_intitle.AutoSize = true;
+            this.check_intitle.Location = new System.Drawing.Point(6, 53);
+            this.check_intitle.Name = "check_intitle";
+            this.check_intitle.Size = new System.Drawing.Size(96, 16);
+            this.check_intitle.TabIndex = 0;
+            this.check_intitle.Text = "在题目中查找";
+            this.check_intitle.UseVisualStyleBackColor = true;
+            // 
+            // check_incontent
+            // 
+            this.check_incontent.AutoSize = true;
+            this.check_incontent.Location = new System.Drawing.Point(7, 31);
+            this.check_incontent.Name = "check_incontent";
+            this.check_incontent.Size = new System.Drawing.Size(288, 16);
+            this.check_incontent.TabIndex = 0;
+            this.check_incontent.Text = "内容中查找（文本，Html,Xml,World,Excel,PPT）";
+            this.check_incontent.UseVisualStyleBackColor = true;
+            this.check_incontent.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 181);
+            this.label2.Location = new System.Drawing.Point(23, 245);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "替换为：";
             // 
-            // groupBox1
+            // label1
             // 
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Location = new System.Drawing.Point(16, 216);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(290, 86);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "范围";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(22, 208);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "查找内容：";
             // 
-            // checkBox1
+            // tb_replaceText
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(7, 31);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(252, 16);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "在数据选项中查找（。。。。。。。。。）";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.tb_replaceText.Location = new System.Drawing.Point(97, 241);
+            this.tb_replaceText.Name = "tb_replaceText";
+            this.tb_replaceText.Size = new System.Drawing.Size(269, 21);
+            this.tb_replaceText.TabIndex = 2;
             // 
-            // checkBox2
+            // tb_findText
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 53);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(120, 16);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "在数据选择中查找";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.tb_findText.Location = new System.Drawing.Point(97, 205);
+            this.tb_findText.Name = "tb_findText";
+            this.tb_findText.Size = new System.Drawing.Size(269, 21);
+            this.tb_findText.TabIndex = 2;
             // 
-            // button1
+            // richTextBox1
             // 
-            this.button1.Location = new System.Drawing.Point(25, 322);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "查找";
-            this.button1.UseVisualStyleBackColor = true;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(6, 6);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(387, 141);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
-            // button2
+            // btn_restore
             // 
-            this.button2.Location = new System.Drawing.Point(106, 322);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "替换";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_restore.Location = new System.Drawing.Point(215, 360);
+            this.btn_restore.Name = "btn_restore";
+            this.btn_restore.Size = new System.Drawing.Size(75, 23);
+            this.btn_restore.TabIndex = 5;
+            this.btn_restore.Text = "还原上一版本";
+            this.btn_restore.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // label3
             // 
-            this.button3.Location = new System.Drawing.Point(187, 322);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "关闭";
-            this.button3.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 171);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "选择路径：";
+            // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // cob_path
+            // 
+            this.cob_path.FormattingEnabled = true;
+            this.cob_path.Location = new System.Drawing.Point(97, 169);
+            this.cob_path.Name = "cob_path";
+            this.cob_path.Size = new System.Drawing.Size(269, 20);
+            this.cob_path.TabIndex = 6;
+            this.cob_path.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
+            this.cob_path.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cob_path_MouseDown_1);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 379);
+            this.ClientSize = new System.Drawing.Size(560, 433);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
@@ -202,6 +243,7 @@
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -212,17 +254,20 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_close;
+        private System.Windows.Forms.Button btn_replace;
+        private System.Windows.Forms.Button btn_find;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox check_intitle;
+        private System.Windows.Forms.CheckBox check_incontent;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox tb_replaceText;
+        private System.Windows.Forms.TextBox tb_findText;
+        private System.Windows.Forms.Button btn_restore;
+        private System.Windows.Forms.Label label3;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.ComboBox cob_path;
     }
 }
 
