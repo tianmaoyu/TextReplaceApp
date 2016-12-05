@@ -32,21 +32,21 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cob_path = new System.Windows.Forms.ComboBox();
             this.btn_close = new System.Windows.Forms.Button();
+            this.btn_restore = new System.Windows.Forms.Button();
             this.btn_replace = new System.Windows.Forms.Button();
             this.btn_find = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.check_intitle = new System.Windows.Forms.CheckBox();
             this.check_incontent = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tb_replaceText = new System.Windows.Forms.TextBox();
             this.tb_findText = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.btn_restore = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.cob_path = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -93,6 +93,16 @@
             this.tabPage2.Text = "查找/替换";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // cob_path
+            // 
+            this.cob_path.FormattingEnabled = true;
+            this.cob_path.Location = new System.Drawing.Point(97, 169);
+            this.cob_path.Name = "cob_path";
+            this.cob_path.Size = new System.Drawing.Size(269, 20);
+            this.cob_path.TabIndex = 6;
+            this.cob_path.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
+            this.cob_path.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cob_path_MouseDown_1);
+            // 
             // btn_close
             // 
             this.btn_close.Location = new System.Drawing.Point(315, 360);
@@ -102,6 +112,15 @@
             this.btn_close.Text = "关闭";
             this.btn_close.UseVisualStyleBackColor = true;
             // 
+            // btn_restore
+            // 
+            this.btn_restore.Location = new System.Drawing.Point(215, 360);
+            this.btn_restore.Name = "btn_restore";
+            this.btn_restore.Size = new System.Drawing.Size(75, 23);
+            this.btn_restore.TabIndex = 5;
+            this.btn_restore.Text = "还原上一版本";
+            this.btn_restore.UseVisualStyleBackColor = true;
+            // 
             // btn_replace
             // 
             this.btn_replace.Location = new System.Drawing.Point(116, 360);
@@ -110,6 +129,7 @@
             this.btn_replace.TabIndex = 5;
             this.btn_replace.Text = "替换";
             this.btn_replace.UseVisualStyleBackColor = true;
+            this.btn_replace.Click += new System.EventHandler(this.btn_replace_Click);
             // 
             // btn_find
             // 
@@ -119,6 +139,7 @@
             this.btn_find.TabIndex = 5;
             this.btn_find.Text = "查找";
             this.btn_find.UseVisualStyleBackColor = true;
+            this.btn_find.Click += new System.EventHandler(this.btn_find_Click);
             // 
             // groupBox1
             // 
@@ -161,6 +182,15 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "替换为：";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 171);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "选择路径：";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -194,38 +224,10 @@
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
-            // btn_restore
-            // 
-            this.btn_restore.Location = new System.Drawing.Point(215, 360);
-            this.btn_restore.Name = "btn_restore";
-            this.btn_restore.Size = new System.Drawing.Size(75, 23);
-            this.btn_restore.TabIndex = 5;
-            this.btn_restore.Text = "还原上一版本";
-            this.btn_restore.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 171);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "选择路径：";
-            // 
             // fileSystemWatcher1
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // cob_path
-            // 
-            this.cob_path.FormattingEnabled = true;
-            this.cob_path.Location = new System.Drawing.Point(97, 169);
-            this.cob_path.Name = "cob_path";
-            this.cob_path.Size = new System.Drawing.Size(269, 20);
-            this.cob_path.TabIndex = 6;
-            this.cob_path.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
-            this.cob_path.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cob_path_MouseDown_1);
             // 
             // Form1
             // 
