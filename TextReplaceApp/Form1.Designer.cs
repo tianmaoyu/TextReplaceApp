@@ -58,7 +58,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(1, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(134, 377);
+            this.pictureBox1.Size = new System.Drawing.Size(134, 421);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -111,6 +111,7 @@
             this.btn_close.TabIndex = 5;
             this.btn_close.Text = "关闭";
             this.btn_close.UseVisualStyleBackColor = true;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // btn_restore
             // 
@@ -157,9 +158,9 @@
             this.check_intitle.AutoSize = true;
             this.check_intitle.Location = new System.Drawing.Point(6, 53);
             this.check_intitle.Name = "check_intitle";
-            this.check_intitle.Size = new System.Drawing.Size(96, 16);
+            this.check_intitle.Size = new System.Drawing.Size(126, 16);
             this.check_intitle.TabIndex = 0;
-            this.check_intitle.Text = "在题目中查找";
+            this.check_intitle.Text = "在题目中查找/替换";
             this.check_intitle.UseVisualStyleBackColor = true;
             // 
             // check_incontent
@@ -167,9 +168,9 @@
             this.check_incontent.AutoSize = true;
             this.check_incontent.Location = new System.Drawing.Point(7, 31);
             this.check_incontent.Name = "check_incontent";
-            this.check_incontent.Size = new System.Drawing.Size(288, 16);
+            this.check_incontent.Size = new System.Drawing.Size(318, 16);
             this.check_incontent.TabIndex = 0;
-            this.check_incontent.Text = "内容中查找（文本，Html,Xml,World,Excel,PPT）";
+            this.check_incontent.Text = "内容中查找/替换（文本，Html,Xml,World,Excel,PPT）";
             this.check_incontent.UseVisualStyleBackColor = true;
             this.check_incontent.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 

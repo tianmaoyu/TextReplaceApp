@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace TextReplaceApp
@@ -76,7 +77,7 @@ namespace TextReplaceApp
         private void btn_find_Click(object sender, EventArgs e)
         {
             string directoyPath = this.cob_path.Text;
-            var IsWaring = directoyPath.Length == 3 && (directoyPath.ToUpper().Contains("C") 
+            var IsWaring = directoyPath.Length == 3 && (directoyPath.ToUpper().Contains("C")
                 || directoyPath.ToUpper().Contains("D") || directoyPath.ToUpper().Contains("E"));
             if (IsWaring)
             {
@@ -87,20 +88,39 @@ namespace TextReplaceApp
             FindEnum where = GetWhere();
             if (where.Equals(FindEnum.All))
             {
+                var filePaths = GetFlies(directoyPath);
+                string message = "";
+                //foreach (string fliePath in filePaths)//\n
+                //{
+                //    message += FindTextInTittle(fileText, fliePath) + "\n";
+                //}
+                foreach (string fliePath in filePaths)//\n
+                {
 
+                    message += FindTextInContent(fileText, fliePath) + "\n";
+                }
+                MessageBox.Show(message);
             }
             if (where.Equals(FindEnum.InTittle))
             {
+                //FindTextInTittle
+                var filePaths = GetFlies(directoyPath);
+                string message = "";
+                foreach (string fliePath in filePaths)//\n
+                {
 
+                    message += FindTextInTittle(fileText, fliePath) + "\n";
+                }
+                MessageBox.Show(message);
             }
             if (where.Equals(FindEnum.InContent))
             {
                 var filePaths = GetFlies(directoyPath);
                 string message = "";
-                foreach(string fliePath in filePaths)//\n
+                foreach (string fliePath in filePaths)//\n
                 {
 
-                    message+= FindText(fileText, fliePath) + "\n";
+                    message += FindTextInContent(fileText, fliePath) + "\n";
                 }
                 MessageBox.Show(message);
             }
@@ -128,20 +148,38 @@ namespace TextReplaceApp
             FindEnum where = GetWhere();
             if (where.Equals(FindEnum.All))
             {
-
+                //var filePaths = GetFlies(directoyPath);
+                  string message = "";
+                //foreach (string fliePath in filePaths)//\n
+                //{
+                //    message += ReplaceTextInTittle(fileText, repalceText, fliePath) + "\n";
+                //}
+                //内容替换
+                var filePaths2 = GetFlies(directoyPath);
+                foreach (string fliePath in filePaths2)//\n
+                {
+                    message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
+                }
+                MessageBox.Show(message);
             }
-            if (where.Equals(FindEnum.InTittle))
-            {
-
-            }
+            //if (where.Equals(FindEnum.InTittle))
+            //{
+            //    var filePaths = GetFlies(directoyPath);
+            //    string message = "";
+            //    foreach (string fliePath in filePaths)//\n
+            //    {
+            //        message += ReplaceTextInTittle(fileText, repalceText, fliePath) + "\n";
+            //    }
+            //    MessageBox.Show(message);
+              
+            //}
             if (where.Equals(FindEnum.InContent))
             {
                 var filePaths = GetFlies(directoyPath);
                 string message = "";
                 foreach (string fliePath in filePaths)//\n
                 {
-
-                    message += ReplaceText(fileText,repalceText, fliePath) + "\n";
+                    message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
                 }
                 MessageBox.Show(message);
             }
@@ -152,14 +190,14 @@ namespace TextReplaceApp
         /// <param name="text"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public string FindText(string text,string filePath)
+        public string FindTextInContent(string text, string filePath)
         {
             if (!File.Exists(filePath))
             {
                 return "没找到" + filePath;
             }
 
-            StreamReader sr = new StreamReader(filePath, Encoding.Default);
+            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
             string line;
             int i = 0;
             while ((line = sr.ReadLine()) != null)
@@ -172,7 +210,7 @@ namespace TextReplaceApp
             }
             string fileName = Path.GetFileName(filePath);
             sr.Close();
-            string reslut= string.Format("文件:{0} 找到 {1} 个:\"{2}\"", fileName, i, text);
+            string reslut = string.Format("内容中:{0} 找到 {1} 个:\"{2}\"", fileName, i, text);
             return reslut;
         }
 
@@ -182,13 +220,13 @@ namespace TextReplaceApp
         /// <param name="text"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public string FindTextCount(string text, string filePath)
+        public string FindTextCountInContent(string text, string filePath)
         {
             if (!File.Exists(filePath))
             {
                 return "没找到" + filePath;
             }
-            StreamReader sr = new StreamReader(filePath, Encoding.Default);
+            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
             string line;
             int i = 0;
             while ((line = sr.ReadLine()) != null)
@@ -203,45 +241,122 @@ namespace TextReplaceApp
         }
 
 
-        public string ReplaceText(string text,string newText,string filePath)
+        public string ReplaceTextInContent(string text, string newText, string filePath)
         {
             if (!File.Exists(filePath))
             {
-                return "没找到" + filePath+"或者无效文件";
+                return "没找到" + filePath + "或者无效文件";
             }
 
             //得到为替换前的个数
-            string countStr = FindTextCount(newText, filePath);
+            string countStr = FindTextCountInContent(newText, filePath);
             int oldCount = 0;
             int newCount = 0;
-            Int32.TryParse(countStr,out oldCount);
+            Int32.TryParse(countStr, out oldCount);
 
 
             string con = "";
-            StreamReader sr = new StreamReader(filePath, Encoding.Default);
+            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
             con = sr.ReadToEnd();
             con = con.Replace(text, newText);
             sr.Close();
-            StreamWriter sw = new StreamWriter(filePath,false, Encoding.Default);
+            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
             sw.WriteLine(con);
             sw.Close();
 
-            countStr = FindTextCount(newText, filePath);
+            countStr = FindTextCountInContent(newText, filePath);
             Int32.TryParse(countStr, out newCount);
 
             string fileName = Path.GetFileName(filePath);
-            string reslut= string.Format("在文件{0}中一共替换了{1}个{2}", fileName,newCount-oldCount, text);
+            string reslut = string.Format("在文件{0}中一共替换了{1}个{2}", fileName, newCount - oldCount, text);
             return reslut;
         }
 
+        /// <summary>
+        /// 在题目中找文字
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public string FindTextInTittle(string text, string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return "没找到" + filePath + "或者无效文件";
+            }
+            string result;
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            Regex regex = new Regex(text);
+            var matches = regex.Matches(fileName);
+            if (matches.Count > 0)
+            {
+                result = string.Format("标题中：{0}的题目中找到{1}个\"{2}\"", fileName, matches.Count, text);
+                return result;
+            }
+            result = string.Format("标题中：{0}的题目中未找到");
+            return result;
 
+        }
+
+        public string ReplaceTextInTittle(string text, string newText, string filePath)
+        {
+            string result = null;
+            if (!File.Exists(filePath))
+            {
+                return "没找到" + filePath + "或者无效文件";
+            }
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string newFileName = Path.GetDirectoryName(filePath)+"\\"+fileName.Replace(text, newText)+ Path.GetExtension(filePath);
+            FileInfo fileInfo = new FileInfo(filePath);
+            fileInfo.MoveTo(newFileName);
+            return string.Format("文件：{0}已经替换为：{1}", fileName, fileName.Replace(text, newText));
+        }
+
+        /// <summary>
+        /// 得到html.xml 这种文件要替换的字符串，和新的字符串
+        /// </summary>
+        /// <param name="oldStrings"></param>
+        /// <param name="newStrings"></param>
+        public String GRelaceForHTMLOrXML(string text, string newText, string filePath)
+        {
+            List<string> oldStrings = new List<string>();
+            List<string> newStrings = new List<string>();
+            int replaceCount = 0;
+            string content = "";
+            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
+            content = sr.ReadToEnd();
+            Regex regex = new Regex(@"(?<=>).*?(?=<)");
+            var matches = regex.Matches(content);
+            foreach(Match match in matches)
+            {
+              
+                if (match.Value.Contains(text))
+                {
+                    oldStrings.Add(match.Value);
+                    newStrings.Add(match.Value.Replace(text, newText));
+                    replaceCount++;
+                }
+            }
+            sr.Close();
+            //对html .xml 进行替换
+            for(int i=0;i< oldStrings.Count; i++)
+            {
+                content.Replace(oldStrings[i], newStrings[i]);
+            }
+            StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8);
+            sw.WriteLine(content);
+            sw.Close();
+            string fileName = Path.GetFileName(filePath);
+            String result = string.Format("标题中：{0}的题目中找到{1}个\"{2}\"", fileName, replaceCount, text);
+            return result;
+        }
         /// <summary>
         /// 得到符合规则的文件
         /// </summary>
         /// <returns></returns>
-       public string[] GetFlies(string fileDirectory)
+        public string[] GetFlies(string fileDirectory)
         {
-            if(! Directory.Exists(fileDirectory))
+            if (!Directory.Exists(fileDirectory))
             {
                 return null;
             }
@@ -272,7 +387,10 @@ namespace TextReplaceApp
             return FindEnum.No;
         }
 
-       
+        private void btn_close_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
     /// <summary>
     /// 在内容中还是在题目中
