@@ -162,6 +162,7 @@
             this.check_intitle.TabIndex = 0;
             this.check_intitle.Text = "在题目中查找/替换";
             this.check_intitle.UseVisualStyleBackColor = true;
+            this.check_intitle.Visible = false;
             // 
             // check_incontent
             // 

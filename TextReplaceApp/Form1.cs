@@ -90,10 +90,6 @@ namespace TextReplaceApp
             {
                 var filePaths = GetFlies(directoyPath);
                 string message = "";
-                //foreach (string fliePath in filePaths)//\n
-                //{
-                //    message += FindTextInTittle(fileText, fliePath) + "\n";
-                //}
                 foreach (string fliePath in filePaths)//\n
                 {
 
@@ -101,18 +97,7 @@ namespace TextReplaceApp
                 }
                 MessageBox.Show(message);
             }
-            if (where.Equals(FindEnum.InTittle))
-            {
-                //FindTextInTittle
-                var filePaths = GetFlies(directoyPath);
-                string message = "";
-                foreach (string fliePath in filePaths)//\n
-                {
-
-                    message += FindTextInTittle(fileText, fliePath) + "\n";
-                }
-                MessageBox.Show(message);
-            }
+          
             if (where.Equals(FindEnum.InContent))
             {
                 var filePaths = GetFlies(directoyPath);
@@ -148,13 +133,8 @@ namespace TextReplaceApp
             FindEnum where = GetWhere();
             if (where.Equals(FindEnum.All))
             {
-                //var filePaths = GetFlies(directoyPath);
                   string message = "";
-                //foreach (string fliePath in filePaths)//\n
-                //{
-                //    message += ReplaceTextInTittle(fileText, repalceText, fliePath) + "\n";
-                //}
-                //内容替换
+              
                 var filePaths2 = GetFlies(directoyPath);
                 foreach (string fliePath in filePaths2)//\n
                 {
@@ -162,17 +142,7 @@ namespace TextReplaceApp
                 }
                 MessageBox.Show(message);
             }
-            //if (where.Equals(FindEnum.InTittle))
-            //{
-            //    var filePaths = GetFlies(directoyPath);
-            //    string message = "";
-            //    foreach (string fliePath in filePaths)//\n
-            //    {
-            //        message += ReplaceTextInTittle(fileText, repalceText, fliePath) + "\n";
-            //    }
-            //    MessageBox.Show(message);
-              
-            //}
+         
             if (where.Equals(FindEnum.InContent))
             {
                 var filePaths = GetFlies(directoyPath);
@@ -272,45 +242,6 @@ namespace TextReplaceApp
             return reslut;
         }
 
-        /// <summary>
-        /// 在题目中找文字
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        public string FindTextInTittle(string text, string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                return "没找到" + filePath + "或者无效文件";
-            }
-            string result;
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            Regex regex = new Regex(text);
-            var matches = regex.Matches(fileName);
-            if (matches.Count > 0)
-            {
-                result = string.Format("标题中：{0}的题目中找到{1}个\"{2}\"", fileName, matches.Count, text);
-                return result;
-            }
-            result = string.Format("标题中：{0}的题目中未找到");
-            return result;
-
-        }
-
-        public string ReplaceTextInTittle(string text, string newText, string filePath)
-        {
-            string result = null;
-            if (!File.Exists(filePath))
-            {
-                return "没找到" + filePath + "或者无效文件";
-            }
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            string newFileName = Path.GetDirectoryName(filePath)+"\\"+fileName.Replace(text, newText)+ Path.GetExtension(filePath);
-            FileInfo fileInfo = new FileInfo(filePath);
-            fileInfo.MoveTo(newFileName);
-            return string.Format("文件：{0}已经替换为：{1}", fileName, fileName.Replace(text, newText));
-        }
 
         /// <summary>
         /// 得到html.xml 这种文件要替换的字符串，和新的字符串
@@ -380,10 +311,6 @@ namespace TextReplaceApp
             {
                 return FindEnum.InContent;
             }
-            if (this.check_intitle.Checked)
-            {
-                return FindEnum.InTittle;
-            }
             return FindEnum.No;
         }
 
@@ -399,7 +326,6 @@ namespace TextReplaceApp
     {
         No = 0,
         InContent = 1,
-        InTittle = 2,
         All = 3
     };
 }
