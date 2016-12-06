@@ -102,6 +102,12 @@ namespace TextReplaceApp
                         message += FindTextInContent(fileText, fliePath) + "\n";
 
                     }
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
+                    {
+                        ExcelHelper excelHelper = new ExcelHelper();
+                        //excelHelper.RunVBA(fileText, repalceText, fliePath);
+                       // message += excelHelper.FindForExcel(fileText, fliePath);
+                    }
                 }
                 MessageBox.Show(message);
             }
@@ -142,6 +148,15 @@ namespace TextReplaceApp
                     {
                         message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
                     }
+                    if(Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
+                    {
+                        ExcelHelper excelHelper = new ExcelHelper();
+                        //excelHelper.RunVBA(fileText, repalceText, fliePath);
+                        message+= "excel 暂时无法返回个数";
+                        excelHelper.AddVBAForExcel(fileText, repalceText, fliePath);
+                        //excelHelper.RunVBA(fliePath);
+                    }
+                    //ExcelHelper
                 }
                 MessageBox.Show(message);
             }
