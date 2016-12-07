@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pptWrite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -104,7 +105,7 @@ namespace TextReplaceApp
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
-                        ExcelHelper excelHelper = new ExcelHelper();
+                        //ExcelHelper excelHelper = new ExcelHelper();
                         //excelHelper.RunVBA(fileText, repalceText, fliePath);
                        // message += excelHelper.FindForExcel(fileText, fliePath);
                     }
@@ -150,11 +151,23 @@ namespace TextReplaceApp
                     }
                     if(Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
-                        ExcelHelper excelHelper = new ExcelHelper();
-                        //excelHelper.RunVBA(fileText, repalceText, fliePath);
-                        //message+= "excel 暂时无法返回个数";
+                        //ExcelHelper excelHelper = new ExcelHelper();
+                        ////excelHelper.RunVBA(fileText, repalceText, fliePath);
+                        ////message+= "excel 暂时无法返回个数";
                         //excelHelper.AddVBAForExcel(fileText, repalceText, fliePath);
                         //excelHelper.RunVBA(fliePath);
+                    }
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
+                    {
+                        WordHelper wordHelper = new WordHelper();
+                        wordHelper.ReplaceInWord(fileText, repalceText, fliePath);
+                    }
+                        if (Path.GetExtension(fliePath).ToUpper().Equals(".PPTX")|| Path.GetExtension(fliePath).ToUpper().Equals(".PPT"))
+                    {
+                        OperatePPT ppt = new OperatePPT();
+                        ppt.PPTOpen(fliePath);
+                        ppt.ReplaceAll("你好", "hello");
+                        ppt.PPTClose();
                     }
                     //ExcelHelper
                 }

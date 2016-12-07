@@ -24,7 +24,7 @@ namespace TextReplaceApp
         {
             object unknow = Type.Missing;
             Word.Document doc = null;
-            word.Visible = true;
+            word.Visible = false;
             object file = fliePath;
             doc = word.Documents.Open(ref file,
                 ref unknow, ref unknow, ref unknow, ref unknow,
