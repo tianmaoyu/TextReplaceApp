@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -77,6 +78,11 @@ namespace TextReplaceApp
 
         private void btn_find_Click(object sender, EventArgs e)
         {
+            if (IsOpenedPPT())
+            {
+                MessageBox.Show("请先关闭PPT!");
+                return;
+            }
             string directoyPath = this.cob_path.Text;
             var IsWaring = directoyPath.Length == 3 && (directoyPath.ToUpper().Contains("C")
                 || directoyPath.ToUpper().Contains("D") || directoyPath.ToUpper().Contains("E"));
@@ -94,7 +100,7 @@ namespace TextReplaceApp
                 foreach (string fliePath in filePaths)//\n
                 {
                     //HTML.XML
-                    if (Path.GetExtension(fliePath).ToUpper().Equals(".HTML")|| Path.GetExtension(fliePath).ToUpper().Equals(".XML"))
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".HTML") || Path.GetExtension(fliePath).ToUpper().Equals(".XML"))
                     {
                         message += FindForHTMLOrXML(fileText, fliePath) + "\n";
                     }
@@ -105,9 +111,20 @@ namespace TextReplaceApp
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
-                        //ExcelHelper excelHelper = new ExcelHelper();
-                        //excelHelper.RunVBA(fileText, repalceText, fliePath);
-                       // message += excelHelper.FindForExcel(fileText, fliePath);
+                        ExcelHelper2 exceHelper = new ExcelHelper2();
+                        message += exceHelper.FindInExcel(fileText, fliePath) + "\n";
+                    }
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
+                    {
+                        WordHelper wordHelper = new WordHelper();
+                        message += wordHelper.FindInWord(fileText, fliePath) + "\n"; ;
+                    }
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".PPTX") || Path.GetExtension(fliePath).ToUpper().Equals(".PPT"))
+                    {
+                        OperatePPT ppt = new OperatePPT();
+                        ppt.PPTOpen(fliePath);
+                        message += ppt.FindInPPT(fileText, fliePath) + "\n"; ;
+                        ppt.PPTClose();
                     }
                 }
                 MessageBox.Show(message);
@@ -117,6 +134,11 @@ namespace TextReplaceApp
 
         private void btn_replace_Click(object sender, EventArgs e)
         {
+            if (IsOpenedPPT())
+            {
+                MessageBox.Show("请先关闭PPT!");
+                return;
+            }
             string directoyPath = this.cob_path.Text;
             string fileText = this.tb_findText.Text;
             string repalceText = this.tb_replaceText.Text.Trim();
@@ -145,31 +167,27 @@ namespace TextReplaceApp
                     {
                         message += RelaceForHTMLOrXML(fileText, repalceText, fliePath) + "\n";
                     }
-                    if(Path.GetExtension(fliePath).ToUpper().Equals(".TXT"))
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".TXT"))
                     {
                         message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
                     }
-                    if(Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
-                        //ExcelHelper excelHelper = new ExcelHelper();
-                        ////excelHelper.RunVBA(fileText, repalceText, fliePath);
-                        ////message+= "excel 暂时无法返回个数";
-                        //excelHelper.AddVBAForExcel(fileText, repalceText, fliePath);
-                        //excelHelper.RunVBA(fliePath);
+                        ExcelHelper2 exceHelper = new ExcelHelper2();
+                        message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n"; 
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
                     {
                         WordHelper wordHelper = new WordHelper();
-                        wordHelper.ReplaceInWord(fileText, repalceText, fliePath);
+                        message += wordHelper.ReplaceInWord(fileText, repalceText, fliePath) + "\n"; ;
                     }
-                        if (Path.GetExtension(fliePath).ToUpper().Equals(".PPTX")|| Path.GetExtension(fliePath).ToUpper().Equals(".PPT"))
+                    if (Path.GetExtension(fliePath).ToUpper().Equals(".PPTX") || Path.GetExtension(fliePath).ToUpper().Equals(".PPT"))
                     {
                         OperatePPT ppt = new OperatePPT();
                         ppt.PPTOpen(fliePath);
-                        ppt.ReplaceAll("你好", "hello");
+                        message += ppt.ReplaceAll(fileText, repalceText, fliePath) + "\n"; ;
                         ppt.PPTClose();
                     }
-                    //ExcelHelper
                 }
                 MessageBox.Show(message);
             }
@@ -300,9 +318,9 @@ namespace TextReplaceApp
             content = sr.ReadToEnd();
             Regex regex = new Regex(@"(?<=>).*?(?=<)");
             var matches = regex.Matches(content);
-            foreach(Match match in matches)
+            foreach (Match match in matches)
             {
-              
+
                 if (match.Value.Contains(text))
                 {
                     oldStrings.Add(match.Value);
@@ -312,11 +330,11 @@ namespace TextReplaceApp
             }
             sr.Close();
             //对html .xml 进行替换
-            for (int i=0;i< oldStrings.Count; i++)
+            for (int i = 0; i < oldStrings.Count; i++)
             {
-                content= content.Replace(oldStrings[i], newStrings[i]);
+                content = content.Replace(oldStrings[i], newStrings[i]);
             }
-           
+
             StreamWriter sw = new StreamWriter(filePath, false, Encoding.GetEncoding("gb2312"));
             sw.WriteLine(content);
             sw.Close();
@@ -356,6 +374,20 @@ namespace TextReplaceApp
         private void btn_close_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private bool IsOpenedPPT()
+        {
+            Process[] ps = Process.GetProcesses();
+            foreach (Process item in ps)
+            {
+                //手动关闭ppt
+                if (item.ProcessName == "POWERPNT")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
     /// <summary>

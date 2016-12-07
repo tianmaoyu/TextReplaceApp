@@ -38,7 +38,6 @@
             this.btn_replace = new System.Windows.Forms.Button();
             this.btn_find = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.check_intitle = new System.Windows.Forms.CheckBox();
             this.check_incontent = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -144,7 +143,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.check_intitle);
             this.groupBox1.Controls.Add(this.check_incontent);
             this.groupBox1.Location = new System.Drawing.Point(16, 274);
             this.groupBox1.Name = "groupBox1";
@@ -153,25 +151,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "范围";
             // 
-            // check_intitle
-            // 
-            this.check_intitle.AutoSize = true;
-            this.check_intitle.Location = new System.Drawing.Point(6, 53);
-            this.check_intitle.Name = "check_intitle";
-            this.check_intitle.Size = new System.Drawing.Size(126, 16);
-            this.check_intitle.TabIndex = 0;
-            this.check_intitle.Text = "在题目中查找/替换";
-            this.check_intitle.UseVisualStyleBackColor = true;
-            this.check_intitle.Visible = false;
-            // 
             // check_incontent
             // 
             this.check_incontent.AutoSize = true;
             this.check_incontent.Location = new System.Drawing.Point(7, 31);
             this.check_incontent.Name = "check_incontent";
-            this.check_incontent.Size = new System.Drawing.Size(318, 16);
+            this.check_incontent.Size = new System.Drawing.Size(336, 16);
             this.check_incontent.TabIndex = 0;
-            this.check_incontent.Text = "内容中查找/替换（文本，Html,Xml,World,Excel,PPT）";
+            this.check_incontent.Text = "内容中查找/替换（TXT，Html,Xml,World,Excel,PPT,RTF）";
             this.check_incontent.UseVisualStyleBackColor = true;
             this.check_incontent.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -262,7 +249,6 @@
         private System.Windows.Forms.Button btn_replace;
         private System.Windows.Forms.Button btn_find;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox check_intitle;
         private System.Windows.Forms.CheckBox check_incontent;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

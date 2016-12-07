@@ -44,11 +44,11 @@ namespace pptWrite
             {
                 objApp = new POWERPOINT.Application();
                 objApp.Visible = OFFICECORE.MsoTriState.msoTrue;
-                
+
                 //以非只读方式打开,方便操作结束后保存.
                 objPresSet = objApp.Presentations.Open(filePath, OFFICECORE.MsoTriState.msoFalse);
                 //假装隐藏
-             
+
             }
             catch (Exception ex)
             {
@@ -57,45 +57,7 @@ namespace pptWrite
 
             }
         }
-        ///// <summary>
-        ///// 自动播放PPT文档.
-        ///// </summary>
-        ///// <param name="filePath">PPTy文件路径.</param>
-        ///// <param name="playTime">翻页的时间间隔.【以秒为单位】</param>
-        //public void PPTAuto(string filePath, int playTime)
-        //{
-        //    //防止连续打开多个PPT程序.
-        //    if (this.objApp != null) { return; }
-        //    objApp = new POWERPOINT.Application();
-        //    objPresSet = objApp.Presentations.Open(filePath, OFFICECORE.MsoTriState.msoCTrue, OFFICECORE.MsoTriState.msoFalse, OFFICECORE.MsoTriState.msoFalse);
-        //    // objPresSet = objApp.Presentations.Add(filePath, OFFICECORE.MsoTriState.msoCTrue, OFFICECORE.MsoTriState.msoFalse, OFFICECORE.MsoTriState.msoFalse);
-        //    // 自动播放的代码（开始）
 
-
-        //    int Slides = objPresSet.Slides.Count;
-        //    int[] SlideIdx = new int[Slides];
-        //    for (int i = 0; i < Slides; i++) { SlideIdx[i] = i + 1; };
-        //    objSldRng = objPresSet.Slides.Range(SlideIdx);
-        //    objSST = objSldRng.SlideShowTransition;
-        //    //设置翻页的时间.
-        //    objSST.AdvanceOnTime = OFFICECORE.MsoTriState.msoCTrue;
-        //    objSST.AdvanceTime = playTime;
-        //    //翻页时的特效!
-        //    objSST.EntryEffect = POWERPOINT.PpEntryEffect.ppEffectCircleOut;
-        //    //Prevent Office Assistant from displaying alert messages:
-        //    bAssistantOn = objApp.Assistant.On;
-        //    objApp.Assistant.On = false;
-        //    //Run the Slide show from slides 1 thru 3.
-        //    objSSS = objPresSet.SlideShowSettings;
-        //    objSSS.StartingSlide = 1;
-        //    objSSS.EndingSlide = Slides;
-        //    objSSS.Run();
-        //    //Wait for the slide show to end.
-        //    objSSWs = objApp.SlideShowWindows;
-        //    while (objSSWs.Count >= 1) System.Threading.Thread.Sleep(playTime * 100);
-        //    this.objPresSet.Close();
-        //    this.objApp.Quit();
-        //}
         /// <summary>
         /// PPT下一页。
         /// </summary>
@@ -140,10 +102,6 @@ namespace pptWrite
                     }
                     catch
                     { }
-                    //MessageBox.Show("" + i.ToString());
-
-
-                    //NextSlide();
                 }
 
             }
@@ -159,14 +117,7 @@ namespace pptWrite
             //装备PPT程序。
             if (this.objPresSet != null)
             {
-                //判断是否退出程序,可以不使用。
-                //objSSWs = objApp.SlideShowWindows;
-                //if (objSSWs.Count >= 1)
-                //{
-                //if (MessageBox.Show("是否保存修改的笔迹!", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 this.objPresSet.Save();
-                //}
-                //this.objPresSet.Close();
             }
             if (this.objApp != null)
             {
@@ -176,27 +127,19 @@ namespace pptWrite
             Process[] ps = Process.GetProcesses();
             foreach (Process item in ps)
             {
-               
-                {
-                    var mae = item.MainWindowTitle;
-                    if (item.MainWindowTitle.Contains("PowerPoint"))
-                    {
-                        ;
-                    }
-                }
+                //手动关闭ppt
                 if (item.ProcessName == "POWERPNT")
                 {
                     item.Kill();
                 }
             }
-         
-           
         }
         #endregion
 
-        public void ReplaceAll(string OldText, string NewText)
+        public string ReplaceAll(string OldText, string NewText, string filePath)
         {
             int num = PageNum();
+            int total = 0;
             for (int j = 1; j <= num; j++)
             {
                 POWERPOINT.Slide slide = objPresSet.Slides[j];
@@ -214,11 +157,11 @@ namespace pptWrite
                                 Regex regex = new Regex(NewText);
                                 var matches = regex.Matches(text);
                                 //需求替换的次数
-                                 foreach(var macth in matches)
+                                foreach (var macth in matches)
                                 {
                                     textFrame.TextRange.Replace(OldText, NewText);
+                                    total++;
                                 }
-                           
                             }
                         }
                         catch
@@ -226,6 +169,9 @@ namespace pptWrite
                     }
                 }
             }
+            string fileName = Path.GetFileName(filePath);
+            string reslut = string.Format("在文件{0}-----替换了{1}个{2}", fileName, total, OldText);
+            return reslut;
         }
 
         public string FindInPPT(string oldText, string filePath)
