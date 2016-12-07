@@ -152,8 +152,8 @@ namespace TextReplaceApp
                     {
                         ExcelHelper excelHelper = new ExcelHelper();
                         //excelHelper.RunVBA(fileText, repalceText, fliePath);
-                        message+= "excel 暂时无法返回个数";
-                        excelHelper.AddVBAForExcel(fileText, repalceText, fliePath);
+                        //message+= "excel 暂时无法返回个数";
+                        //excelHelper.AddVBAForExcel(fileText, repalceText, fliePath);
                         //excelHelper.RunVBA(fliePath);
                     }
                     //ExcelHelper
