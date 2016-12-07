@@ -27,7 +27,7 @@ namespace TextReplaceApp
             int total = 0;
             try
             {
-                word.Visible = true;
+                word.Visible = false;
                 object file = fliePath;
                 doc = word.Documents.Open(ref file,
                     ref unknow, ref unknow, ref unknow, ref unknow,
@@ -88,7 +88,7 @@ namespace TextReplaceApp
             {
                 object unknow = Type.Missing;
               
-                word.Visible = true;
+                word.Visible = false;
                 object file = wordPath;
                 doc = word.Documents.Open(ref file,
                     ref unknow, ref unknow, ref unknow, ref unknow,

@@ -154,7 +154,7 @@ namespace pptWrite
                             if (textFrame.TextRange != null)
                             {
                                 string text = textFrame.TextRange.Text;
-                                Regex regex = new Regex(NewText);
+                                Regex regex = new Regex(OldText);
                                 var matches = regex.Matches(text);
                                 //需求替换的次数
                                 foreach (var macth in matches)
