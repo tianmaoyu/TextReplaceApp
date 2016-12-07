@@ -34,7 +34,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cob_path = new System.Windows.Forms.ComboBox();
             this.btn_close = new System.Windows.Forms.Button();
-            this.btn_restore = new System.Windows.Forms.Button();
             this.btn_replace = new System.Windows.Forms.Button();
             this.btn_find = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -74,7 +73,6 @@
             // 
             this.tabPage2.Controls.Add(this.cob_path);
             this.tabPage2.Controls.Add(this.btn_close);
-            this.tabPage2.Controls.Add(this.btn_restore);
             this.tabPage2.Controls.Add(this.btn_replace);
             this.tabPage2.Controls.Add(this.btn_find);
             this.tabPage2.Controls.Add(this.groupBox1);
@@ -104,22 +102,13 @@
             // 
             // btn_close
             // 
-            this.btn_close.Location = new System.Drawing.Point(315, 360);
+            this.btn_close.Location = new System.Drawing.Point(221, 360);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(75, 23);
             this.btn_close.TabIndex = 5;
             this.btn_close.Text = "关闭";
             this.btn_close.UseVisualStyleBackColor = true;
             this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
-            // 
-            // btn_restore
-            // 
-            this.btn_restore.Location = new System.Drawing.Point(215, 360);
-            this.btn_restore.Name = "btn_restore";
-            this.btn_restore.Size = new System.Drawing.Size(75, 23);
-            this.btn_restore.TabIndex = 5;
-            this.btn_restore.Text = "还原上一版本";
-            this.btn_restore.UseVisualStyleBackColor = true;
             // 
             // btn_replace
             // 
@@ -254,7 +243,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_replaceText;
         private System.Windows.Forms.TextBox tb_findText;
-        private System.Windows.Forms.Button btn_restore;
         private System.Windows.Forms.Label label3;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.ComboBox cob_path;
