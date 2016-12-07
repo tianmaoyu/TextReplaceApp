@@ -24,41 +24,52 @@ namespace TextReplaceApp
         {
             object unknow = Type.Missing;
             Word.Document doc = null;
-            word.Visible = false;
-            object file = fliePath;
-            doc = word.Documents.Open(ref file,
-                ref unknow, ref unknow, ref unknow, ref unknow,
-                ref unknow, ref unknow, ref unknow, ref unknow,
-                ref unknow, ref unknow, ref unknow, ref unknow,
-                ref unknow, ref unknow, ref unknow);
+            int total = 0;
+            try
+            {
+                word.Visible = true;
+                object file = fliePath;
+                doc = word.Documents.Open(ref file,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow);
 
-            word.Selection.Find.Replacement.ClearFormatting();
-            word.Selection.Find.ClearFormatting();
-            word.Selection.Find.Text = fileText;//需要被替换的文本
-            word.Selection.Find.Replacement.Text = repalceText;//替换文本 
-            object oMissing = System.Reflection.Missing.Value;
-            object replace = Word.WdReplace.wdReplaceAll;
+                word.Selection.Find.Replacement.ClearFormatting();
+                word.Selection.Find.ClearFormatting();
+                word.Selection.Find.Text = fileText;//需要被替换的文本
+                word.Selection.Find.Replacement.Text = repalceText;//替换文本 
+                object oMissing = System.Reflection.Missing.Value;
+                object replace = Word.WdReplace.wdReplaceAll;
 
-            string contenText = doc.Content.Text;
-            Regex regex = new Regex(fileText);
-            var matches = regex.Matches(contenText);
-          
-            //执行替换操作
-            word.Selection.Find.Execute(
-            ref oMissing, ref oMissing,
-            ref oMissing, ref oMissing,
-            ref oMissing, ref oMissing,
-            ref oMissing, ref oMissing, ref oMissing,
-            ref oMissing, ref replace,
-            ref oMissing, ref oMissing,
-            ref oMissing, ref oMissing);
-            //doc.Content.Text = doc.Content.Text.Replace("第","hello");
-            //foreach()
-            doc.Save();
-            doc.Close();
-            word.Quit();
+                string contenText = doc.Content.Text;
+                Regex regex = new Regex(fileText);
+                var matches = regex.Matches(contenText);
+                total = matches.Count;
+                //执行替换操作
+                word.Selection.Find.Execute(
+                ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing, ref oMissing,
+                ref oMissing, ref replace,
+                ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing);
+                doc.Save();
+                doc.Close();
+                word.Quit();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                word.Quit();
+            }
+           
             string fileName = Path.GetFileName(fliePath);
-            String result = string.Format("在文件：{0}中-----找到{1}个\"{2}\"", fileName, matches.Count, fileText);
+            String result = string.Format("在文件：{0}中-----找到{1}个\"{2}\"", fileName, total, fileText);
             return result;
         }
 
@@ -71,24 +82,38 @@ namespace TextReplaceApp
         /// <returns></returns>
         public string FindInWord(string text, string wordPath)
         {
-
-            object unknow = Type.Missing;
+            String result = "";
             Word.Document doc = null;
-            word.Visible = true;
-            object file = wordPath;
-            doc = word.Documents.Open(ref file,
-                ref unknow, ref unknow, ref unknow, ref unknow,
-                ref unknow, ref unknow, ref unknow, ref unknow,
-                ref unknow, ref unknow, ref unknow, ref unknow,
-                ref unknow, ref unknow, ref unknow);
-            doc.Close();
-            word.Quit();
-            string contenText = doc.Content.Text;
-            Regex regex = new Regex(text);
-            var matches = regex.Matches(contenText);
-            string fileName = Path.GetFileName(wordPath);
-            String result = string.Format("在文件：{0}中-----找到{1}个\"{2}\"", fileName, matches.Count, text);
-            return result;
+            try
+            {
+                object unknow = Type.Missing;
+              
+                word.Visible = true;
+                object file = wordPath;
+                doc = word.Documents.Open(ref file,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow, ref unknow,
+                    ref unknow, ref unknow, ref unknow);
+                string contenText = doc.Content.Text;
+                doc.Close();
+                word.Quit();
+
+                Regex regex = new Regex(text);
+                var matches = regex.Matches(contenText);
+                string fileName = Path.GetFileName(wordPath);
+                result = string.Format("在文件：{0}中-----找到{1}个\"{2}\"", fileName, matches.Count, text);
+                return result;
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            finally
+            {
+                word.Quit();
+            }
+            return null;
         }
     }
 }
