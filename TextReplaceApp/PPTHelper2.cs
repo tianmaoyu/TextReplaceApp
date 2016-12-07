@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using OFFICECORE = Microsoft.Office.Core;
 using POWERPOINT = Microsoft.Office.Interop.PowerPoint;
-using System.Windows;
-using System.Collections;
 using System.Windows.Forms;
 using System.IO;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
