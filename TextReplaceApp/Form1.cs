@@ -18,47 +18,7 @@ namespace TextReplaceApp
         {
             InitializeComponent();
         }
-        #region 没有用的事件
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cob_path_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
-        #endregion
+      
 
 
         private void cob_path_MouseDown_1(object sender, MouseEventArgs e)
@@ -75,7 +35,11 @@ namespace TextReplaceApp
             }
             this.cob_path.Text = path;
         }
-
+        /// <summary>
+        /// 查找操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_find_Click(object sender, EventArgs e)
         {
             if (IsOpenedPPT())
@@ -102,11 +66,11 @@ namespace TextReplaceApp
                     //HTML.XML
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".HTML") || Path.GetExtension(fliePath).ToUpper().Equals(".XML"))
                     {
-                        message += FindForHTMLOrXML(fileText, fliePath) + "\n";
+                        message += FindInHTMLOrXML(fileText, fliePath) + "\n";
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".TXT"))
                     {
-                        message += FindTextInContent(fileText, fliePath) + "\n";
+                        message += FindInTXT(fileText, fliePath) + "\n";
 
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
@@ -131,7 +95,11 @@ namespace TextReplaceApp
             }
 
         }
-
+        /// <summary>
+        /// 替换操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_replace_Click(object sender, EventArgs e)
         {
             if (IsOpenedPPT())
@@ -165,22 +133,26 @@ namespace TextReplaceApp
                     //HTML.XML
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".HTML") || Path.GetExtension(fliePath).ToUpper().Equals(".XML"))
                     {
-                        message += RelaceForHTMLOrXML(fileText, repalceText, fliePath) + "\n";
+                        message += RelaceInHTMLOrXML(fileText, repalceText, fliePath) + "\n";
                     }
+                    //txt
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".TXT"))
                     {
-                        message += ReplaceTextInContent(fileText, repalceText, fliePath) + "\n";
+                        message += ReplaceInTXT(fileText, repalceText, fliePath) + "\n";
                     }
+                    //excel
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
                         ExcelHelper2 exceHelper = new ExcelHelper2();
                         message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n"; 
                     }
+                    //word,rft
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
                     {
                         WordHelper wordHelper = new WordHelper();
                         message += wordHelper.ReplaceInWord(fileText, repalceText, fliePath) + "\n"; ;
                     }
+                    //ppt
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".PPTX") || Path.GetExtension(fliePath).ToUpper().Equals(".PPT"))
                     {
                         OperatePPT ppt = new OperatePPT();
@@ -193,12 +165,12 @@ namespace TextReplaceApp
             }
         }
         /// <summary>
-        /// 的到查找内容的详情
+        ///在txt 文本中查找
         /// </summary>
         /// <param name="text"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public string FindTextInContent(string text, string filePath)
+        public string FindInTXT(string text, string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -207,18 +179,16 @@ namespace TextReplaceApp
 
             StreamReader sr = new StreamReader(filePath, Encoding.Default);
             string line;
-            int i = 0;
+            int total = 0;
             while ((line = sr.ReadLine()) != null)
             {
-                if (line.Contains(text))
-                {
-                    i++;
-
-                }
+                Regex regex = new Regex(text);
+                var matches = regex.Matches(line);
+                total += matches.Count;
             }
             string fileName = Path.GetFileName(filePath);
             sr.Close();
-            string reslut = string.Format("在文件:{0} -----找到 {1} 个:\"{2}\"", fileName, i, text);
+            string reslut = string.Format("在文件:{0} -----找到 {1} 个:\"{2}\"", fileName, total, text);
             return reslut;
         }
 
@@ -236,20 +206,20 @@ namespace TextReplaceApp
             }
             StreamReader sr = new StreamReader(filePath, Encoding.Default);
             string line;
-            int i = 0;
+            int total = 0;
             while ((line = sr.ReadLine()) != null)
             {
-                if (line.Contains(text))
-                {
-                    i++;
-                }
+               
+                Regex regex = new Regex(text);
+                var matches = regex.Matches(line);
+                total += matches.Count;
             }
             sr.Close();
-            return i.ToString();
+            return total.ToString();
         }
 
 
-        public string ReplaceTextInContent(string text, string newText, string filePath)
+        public string ReplaceInTXT(string text, string newText, string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -280,7 +250,7 @@ namespace TextReplaceApp
             return reslut;
         }
 
-        public String FindForHTMLOrXML(string text, string filePath)
+        public String FindInHTMLOrXML(string text, string filePath)
         {
             int replaceCount = 0;
             string content = "";
@@ -308,7 +278,7 @@ namespace TextReplaceApp
         /// <param name="newText"></param>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public String RelaceForHTMLOrXML(string text, string newText, string filePath)
+        public String RelaceInHTMLOrXML(string text, string newText, string filePath)
         {
             List<string> oldStrings = new List<string>();
             List<string> newStrings = new List<string>();
@@ -352,7 +322,7 @@ namespace TextReplaceApp
             {
                 return null;
             }
-            String[] files = Directory.GetFiles(fileDirectory, "*.*", SearchOption.TopDirectoryOnly);//SearchOption.AllDirectories
+            String[] files = Directory.GetFiles(fileDirectory, "*.*", SearchOption.TopDirectoryOnly);
             return files;
         }
 
@@ -381,7 +351,7 @@ namespace TextReplaceApp
             Process[] ps = Process.GetProcesses();
             foreach (Process item in ps)
             {
-                //手动关闭ppt
+                
                 if (item.ProcessName == "POWERPNT")
                 {
                     return true;

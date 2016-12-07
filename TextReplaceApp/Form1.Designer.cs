@@ -97,7 +97,7 @@
             this.cob_path.Name = "cob_path";
             this.cob_path.Size = new System.Drawing.Size(269, 20);
             this.cob_path.TabIndex = 6;
-            this.cob_path.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
+        
             this.cob_path.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cob_path_MouseDown_1);
             // 
             // btn_close
@@ -149,7 +149,7 @@
             this.check_incontent.TabIndex = 0;
             this.check_incontent.Text = "内容中查找/替换（TXT，Html,Xml,World,Excel,PPT,RTF）";
             this.check_incontent.UseVisualStyleBackColor = true;
-            this.check_incontent.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+          
             // 
             // label2
             // 
@@ -200,7 +200,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(387, 141);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+          
             // 
             // fileSystemWatcher1
             // 
@@ -217,7 +217,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "查找";
-            this.Load += new System.EventHandler(this.Form1_Load);
+         
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

@@ -7,6 +7,9 @@ using System.IO;
 
 namespace TextReplaceApp
 {
+    /// <summary>
+    ///
+    /// </summary>
     public class ExcelHelper2
     {
         Workbook workbook;

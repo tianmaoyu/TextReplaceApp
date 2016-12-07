@@ -69,7 +69,7 @@ namespace TextReplaceApp
             }
            
             string fileName = Path.GetFileName(fliePath);
-            String result = string.Format("在文件：{0}中-----找到{1}个\"{2}\"", fileName, total, fileText);
+            String result = string.Format("在文件：{0}中-----替换了{1}个\"{2}\"", fileName, total, fileText);
             return result;
         }
 

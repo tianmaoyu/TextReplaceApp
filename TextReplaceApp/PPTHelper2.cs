@@ -21,17 +21,9 @@ namespace pptWrite
     /// </summary>
     public class OperatePPT
     {
-        #region=========基本的参数信息=======
         POWERPOINT.Application objApp = null;
         POWERPOINT.Presentation objPresSet = null;
-        POWERPOINT.SlideShowWindows objSSWs;
-        POWERPOINT.SlideShowTransition objSST;
-        POWERPOINT.SlideShowSettings objSSS;
         POWERPOINT.SlideRange objSldRng;
-        bool bAssistantOn;
-
-        #endregion
-        #region===========操作方法==============
         /// <summary>
         /// 打开PPT文档并播放显示。
         /// </summary>
@@ -47,7 +39,6 @@ namespace pptWrite
 
                 //以非只读方式打开,方便操作结束后保存.
                 objPresSet = objApp.Presentations.Open(filePath, OFFICECORE.MsoTriState.msoFalse);
-                //假装隐藏
 
             }
             catch (Exception ex)
@@ -134,7 +125,6 @@ namespace pptWrite
                 }
             }
         }
-        #endregion
 
         public string ReplaceAll(string OldText, string NewText, string filePath)
         {
