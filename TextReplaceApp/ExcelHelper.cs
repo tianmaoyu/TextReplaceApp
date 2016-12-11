@@ -79,6 +79,9 @@ namespace TextReplaceApp
             {
                 //最大行，最大列2003为准
                 Range sourceRange = sheet.Range[sheet.Cells[1, 1], sheet.Cells[65536, 256]];
+                ////
+                //int rowCount = sheet.UsedRange.Cells.Rows.Count;
+                //int rowCount = worksheet.UsedRange.Cells.Column;
                 for (int i = 1; i < 65536; i++)
                 {
                     for (int j = 1; j < 256; j++)

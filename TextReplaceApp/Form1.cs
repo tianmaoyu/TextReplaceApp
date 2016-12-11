@@ -75,7 +75,9 @@ namespace TextReplaceApp
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
-                        ExcelHelper2 exceHelper = new ExcelHelper2();
+                        //ExcelHelper2 exceHelper = new ExcelHelper2();
+                        //message += exceHelper.FindInExcel(fileText, fliePath) + "\n";
+                        ExcelHelper3 exceHelper = new ExcelHelper3();
                         message += exceHelper.FindInExcel(fileText, fliePath) + "\n";
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
@@ -143,8 +145,11 @@ namespace TextReplaceApp
                     //excel
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".XLSX") || Path.GetExtension(fliePath).ToUpper().Equals(".XLS"))
                     {
-                        ExcelHelper2 exceHelper = new ExcelHelper2();
-                        message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n"; 
+                        //ExcelHelper2 exceHelper = new ExcelHelper2();
+                        //message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n";
+                        ExcelHelper3 exceHelper = new ExcelHelper3();
+                        message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n";
+                      
                     }
                     //word,rft
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))

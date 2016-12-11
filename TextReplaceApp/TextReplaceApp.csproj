@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelHelper2.cs" />
+    <Compile Include="ExcelHelper3.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
