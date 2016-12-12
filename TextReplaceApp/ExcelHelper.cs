@@ -122,13 +122,14 @@ namespace TextReplaceApp
             oModule = workbook.VBProject.VBComponents.Add(VBIDE.vbext_ComponentType.vbext_ct_StdModule);
 
             sCode =
-                "sub VBAMacro()\r\n" +
+                "Function  VBAMacro()\r\n" +
                 " Dim Cz As String\r\n" +
                 " Dim Th As String\r\n" +
                 " Cz = \"" + text + "\"\r\n" +
                 " Th = \"" + newText + "\"\r\n" +
                 "  Cells.Replace What:=Cz, Replacement:=Th, LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False\r\n" +
-                "end sub";
+                "VBAMacro=4 \r\n"+
+                "end Function ";
             // Add the VBA macro to the new code module.
             oModule.CodeModule.AddFromString(sCode);
 
@@ -160,12 +161,14 @@ namespace TextReplaceApp
             ExcelMacroHelper ex = new ExcelMacroHelper(excelApp, workbook);
             object outStr = null;
             object[] objs = new object[0];
+            string cc = "";
             foreach (Worksheet sheet in sheets)
             {
                 string sheetName = sheet.Name;
                 sheet.Activate();
                 string vbaName = "VBAMacro";
                 ex.RunExcelMacro(excelPath, vbaName, objs, outStr, false);
+                 cc += outStr;
             }
             workbook.Save();
             workbook.Close(false, Type.Missing, Type.Missing);

@@ -77,8 +77,10 @@ namespace TextReplaceApp
                     {
                         //ExcelHelper2 exceHelper = new ExcelHelper2();
                         //message += exceHelper.FindInExcel(fileText, fliePath) + "\n";
+                        // ExcelHelper3 exceHelper = new ExcelHelper3();
+                        //message += exceHelper.ReplaceInExcel() + "\n";
                         ExcelHelper3 exceHelper = new ExcelHelper3();
-                        message += exceHelper.FindInExcel(fileText, fliePath) + "\n";
+                        message+= exceHelper.FindInExcel(fileText, fliePath);
                     }
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
                     {
@@ -148,8 +150,8 @@ namespace TextReplaceApp
                         //ExcelHelper2 exceHelper = new ExcelHelper2();
                         //message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n";
                         ExcelHelper3 exceHelper = new ExcelHelper3();
-                        message += exceHelper.ReplaceInExcel(fileText, repalceText, fliePath) + "\n";
-                      
+                        exceHelper.ReplaceInExcel(fileText, repalceText, fliePath);
+                       
                     }
                     //word,rft
                     if (Path.GetExtension(fliePath).ToUpper().Equals(".DOCX") || Path.GetExtension(fliePath).ToUpper().Equals(".RTF"))
